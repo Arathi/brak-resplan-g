@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://d04dl07i4a66o"]
+
+[ext_resource type="Script" path="res://actors/student/borders.gd" id="1_7lk75"]
+[ext_resource type="Script" path="res://actors/student/icon.gd" id="1_at02k"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wqj7f"]
+noise_type = 0
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ec3m6"]
+width = 120
+height = 120
+noise = SubResource("FastNoiseLite_wqj7f")
+
+[node name="icon" type="Node2D"]
+script = ExtResource("1_at02k")
+
+[node name="clip" type="Polygon2D" parent="."]
+clip_children = 1
+position = Vector2(5, 5)
+polygon = PackedVector2Array(5, 0, 118, 0, 120, 2, 120, 115, 115, 120, 2, 120, 0, 118, 0, 5)
+
+[node name="avatar" type="Sprite2D" parent="clip"]
+position = Vector2(60, 60)
+texture = SubResource("NoiseTexture2D_ec3m6")
+
+[node name="borders" type="Node2D" parent="."]
+script = ExtResource("1_7lk75")
+
+[node name="name" type="Label" parent="."]
+offset_top = 130.0
+offset_right = 130.0
+offset_bottom = 162.0
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
