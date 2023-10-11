@@ -16,6 +16,11 @@ func _process(delta):
 	pass
 
 
+func exists(path: String) -> bool:
+	var user_path = "user://" + path
+	return FileAccess.file_exists(user_path)
+
+
 func load_data(fileName: String, language: String = "zh", min: bool = false) -> String:
 	var path = "data/"
 	if !NO_LANG_FILES.has(fileName):
@@ -59,5 +64,7 @@ func load_image_texture(path: String) -> ImageTexture:
 		if result == OK:
 			return ImageTexture.create_from_image(image)
 	
-	print("用户资源文件 %s 不存在，无法加载图片" % user_path)
+	# print("用户资源文件 %s 不存在，无法加载图片" % user_path)
+	print("用户资源文件 %s 不存在，尝试连接 SchaleDB 下载" % user_path)
 	return null
+
