@@ -18,7 +18,13 @@ const border_diagonal_width = sqrt(2)
 @export var radius_lbrt: float = 8
 
 # 边框颜色
-@export var color: Color = Color(1, 1, 1)
+@export var border_color: Color = Color("#D9DADC")
+
+# 背景颜色
+@export var background_color: Color = Color("#ffffff"):
+	set(value):
+		background_color = value
+		queue_redraw()
 
 
 # 图片外边距
@@ -52,8 +58,32 @@ func _draw():
 	var w = border_line_width
 	var d = border_diagonal_width
 	
-	var cs = PackedColorArray([color])
-	
+	draw_background(m, g, s, r, w, d, PackedColorArray([background_color]))
+	draw_borders(m, g, s, r, w, d, PackedColorArray([border_color]))
+
+
+func draw_background(m: float, g: float, s: float, r: float, w: float, d: float, cs: PackedColorArray):
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(2*m+g, 0),
+			Vector2(s-r, 0),
+			Vector2(s-r, r),
+			Vector2(s, r),
+			Vector2(s, s-2*m-g),
+			Vector2(s-2*m-g, s),
+			Vector2(r, s),
+			Vector2(r, s-r),
+			Vector2(0, s-r),
+			Vector2(0, 2*m+g),
+		]),
+		cs,
+	)
+	draw_circle(Vector2(r, s-r), r-0.5, background_color)
+	draw_circle(Vector2(s-r, r), r-0.5, background_color)
+	pass
+
+
+func draw_borders(m: float, g: float, s: float, r: float, w: float, d: float, cs: PackedColorArray):
 #	# top
 	draw_polygon(
 		PackedVector2Array([
@@ -72,7 +102,7 @@ func _draw():
 		-PI / 2,
 		0,
 		128,
-		color,
+		border_color,
 		1,
 	)
 	
@@ -116,7 +146,7 @@ func _draw():
 		PI,
 		PI / 2,
 		128,
-		color,
+		border_color,
 		1,
 	)
 	
