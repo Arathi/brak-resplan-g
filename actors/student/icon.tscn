@@ -19,18 +19,15 @@ script = ExtResource("1_at02k")
 script = ExtResource("1_7lk75")
 
 [node name="clip" type="Polygon2D" parent="."]
-visible = false
 clip_children = 1
 position = Vector2(5, 5)
 polygon = PackedVector2Array(5.5, 0, 118, 0, 120, 2, 120, 114.5, 114.5, 120, 2, 120, 0, 118, 0, 5.5)
 
 [node name="avatar" type="Sprite2D" parent="clip"]
-visible = false
 position = Vector2(60, 60)
 texture = SubResource("NoiseTexture2D_ec3m6")
 
 [node name="name" type="Label" parent="."]
-visible = false
 offset_top = 130.0
 offset_right = 130.0
 offset_bottom = 162.0

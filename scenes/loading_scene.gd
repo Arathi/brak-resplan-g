@@ -1,8 +1,12 @@
 extends Node2D
 
 
+const Student = preload("res://domains/metadata/student.gd")
+
+
 @onready var background: Sprite2D = get_node("background")
 @onready var description: Label = get_node("description")
+@onready var resource_name: Label = get_node("resource_name")
 @onready var progress_bar: ProgressBar = get_node("progress_bar")
 
 
@@ -42,23 +46,23 @@ func start_loading():
 
 func loading_students():
 	description.set_text("正在加载学生元数据")
-	var content = UserResourceLoader.load_data("students", "zh")
+	var student_list: Array[Student] = MetadataLoader.load_from_schale()
 	
 	description.set_text("正在解析学生元数据")
-	var datas = JSON.parse_string(content) as Array
-	var amount = datas.size()
+	# var datas = JSON.parse_string(content) as Array
+	var amount = student_list.size()
 	var index = 0
 	
-	for data in datas:
+	for student in student_list:
 		description.set_text("正在遍历学生元数据（%d / %d）" % [index + 1, amount])
-		print("No.%d %s" % [data.Id, data.PathName])
+		print("No.%d %s" % [student.id, student.name])
 		
 		# icon / portrait
-		resources["images/student/icon/%d.webp" % data.Id] = 0
-		resources["images/student/portrait/%d.webp" % data.Id] = 0
+		resources["images/student/icon/%d.webp" % student.id] = 0
+		resources["images/student/portrait/%d.webp" % student.id] = 0
 		
 		# background
-		resources["images/background/%s.jpg" % data.CollectionBG] = 0
+		resources["images/background/%s.jpg" % student.background] = 0
 		
 		index += 1
 	pass
@@ -70,7 +74,7 @@ func check_resources():
 	var exists_counter = 0
 	for res in resources:
 		description.set_text("正在检查本地资源（%d / %d）" % [exists_counter+1, amount])
-		print("正在检查本地资源：%s" % res)
+		resource_name.set_text(res)
 		var exists = UserResourceLoader.exists(res)
 		if exists:
 			resources[res] = ResourceStatus.Completed
