@@ -49,7 +49,6 @@ func loading_students():
 	var student_list: Array[Student] = MetadataLoader.load_from_schale()
 	
 	description.set_text("正在解析学生元数据")
-	# var datas = JSON.parse_string(content) as Array
 	var amount = student_list.size()
 	var index = 0
 	
@@ -77,6 +76,7 @@ func check_resources():
 		resource_name.set_text(res)
 		var exists = UserResourceLoader.exists(res)
 		if exists:
+			UserResourceLoader.load_image_texture(res)
 			resources[res] = ResourceStatus.Completed
 			exists_counter += 1
 		scan_counter += 1

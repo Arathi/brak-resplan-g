@@ -7,6 +7,9 @@ const NO_LANG_FILES = [
 ]
 
 
+var textures: Dictionary = {}
+
+
 func _ready():
 	print("用户资源加载器准备就绪")
 	pass
@@ -42,6 +45,9 @@ func load_data(fileName: String, language: String = "zh", min: bool = false) -> 
 
 
 func load_image_texture(path: String) -> ImageTexture:
+	if textures.has(path):
+		return textures[path]
+	
 	var user_path = "user://" + path
 	if FileAccess.file_exists(user_path):
 		var file = FileAccess.open(user_path, FileAccess.READ)
@@ -62,7 +68,10 @@ func load_image_texture(path: String) -> ImageTexture:
 				return null
 		
 		if result == OK:
-			return ImageTexture.create_from_image(image)
+			var texture = ImageTexture.create_from_image(image)
+			textures[path] = texture
+			print("图片资源 %s 加载完成" % path)
+			return texture
 	
 	# print("用户资源文件 %s 不存在，无法加载图片" % user_path)
 	print("用户资源文件 %s 不存在，尝试连接 SchaleDB 下载" % user_path)
