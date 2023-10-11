@@ -71,6 +71,10 @@ func check_resources():
 	var amount = resources.size()
 	var scan_counter = 0
 	var exists_counter = 0
+	
+	progress_bar.min_value = 0
+	progress_bar.max_value = amount
+	
 	for res in resources:
 		description.set_text("正在检查本地资源（%d / %d）" % [exists_counter+1, amount])
 		resource_name.set_text(res)
@@ -79,6 +83,7 @@ func check_resources():
 			UserResourceLoader.load_image_texture(res)
 			resources[res] = ResourceStatus.Completed
 			exists_counter += 1
+			progress_bar.value = exists_counter
 		scan_counter += 1
 	pass
 
