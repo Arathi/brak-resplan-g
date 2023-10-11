@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://cm03uuomn2ljr"]
+[gd_scene load_steps=2 format=3 uid="uid://cm03uuomn2ljr"]
+
+[ext_resource type="Script" path="res://actors/student/list.gd" id="1_206o3"]
 
 [node name="list" type="Node2D"]
+script = ExtResource("1_206o3")

@@ -16,11 +16,13 @@ func _process(delta):
 
 
 func load_from_schale():
-	var content = UserResourceLoader.load_data("students", "zh")
-	var dataList = JSON.parse_string(content) as Array
-	for data in dataList:
-		var student = convert_student(data)
-		students[student.id] = student
+	if students.size() == 0:
+		print("学生元数据为空，开始从SchaleDB加载转换元数据")
+		var content = UserResourceLoader.load_data("students", "zh")
+		var dataList = JSON.parse_string(content) as Array
+		for data in dataList:
+			var student = convert_student(data)
+			students[student.id] = student
 	
 	var list: Array[Student] = []
 	for key in students:
@@ -62,4 +64,10 @@ func convert_student(data) -> Student:
 	student.background = data.CollectionBG
 	
 	return student
+
+
+func get_student_by_id(id: int) -> Student:
+	if students.size() == 0:
+		load_from_schale()
+	return students[id]
 
